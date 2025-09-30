@@ -1,15 +1,18 @@
 'use strict';
 
 function waitFor(element, eventName) {
-  const resultOne = new Promise((resolve) => {
+  if (!element || typeof element.addEventListener !== 'function') {
+    return Promise.reject(new Error('...'));
+  }
+
+  return new Promise((resolve) => {
     element.addEventListener(eventName, () => {
       resolve(
         `It was ${eventName} on the element: ${element.nodeName}, id: ${element.id}.`,
       );
-    });
+    }, { once: true });
   });
 
-  return resultOne;
 }
 
 const buttons = document.querySelectorAll('button');
