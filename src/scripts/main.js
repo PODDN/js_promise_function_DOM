@@ -1,11 +1,47 @@
 'use strict';
 
 function waitFor(element, eventName) {
-  // write your code here
+  const resultOne = new Promise((resolve) => {
+    element.addEventListener(eventName, () => {
+      resolve(
+        `It was ${eventName} on the element: ${element.nodeName}, id: ${element.id}.`,
+      );
+    });
+  });
+
+  return resultOne;
 }
 
+const buttons = document.querySelectorAll('button');
+const inputs = document.querySelectorAll('input');
+
+const buttonArray = Array.from(buttons);
+const inputArray = Array.from(inputs);
+
+const events = ['click', 'input', 'blur'];
+
+buttonArray.forEach((el) => {
+  events.forEach((eventName) => {
+    waitFor(el, eventName).then((message) => {
+      printMessage(message);
+    });
+  });
+});
+
+inputArray.forEach((el) => {
+  events.forEach((eventName) => {
+    waitFor(el, eventName).then((message) => {
+      printMessage(message);
+    });
+  });
+});
+
 const printMessage = (message) => {
-  // write your code here
+  const div = document.createElement('div');
+
+  div.textContent = message;
+  div.className = 'message';
+  document.body.append(div);
 };
 
 const loginField = document.getElementById('login');
