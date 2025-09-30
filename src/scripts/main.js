@@ -6,13 +6,16 @@ function waitFor(element, eventName) {
   }
 
   return new Promise((resolve) => {
-    element.addEventListener(eventName, () => {
-      resolve(
-        `It was ${eventName} on the element: ${element.nodeName}, id: ${element.id}.`,
-      );
-    }, { once: true });
+    element.addEventListener(
+      eventName,
+      () => {
+        resolve(
+          `It was ${eventName} on the element: ${element.nodeName}, id: ${element.id}.`,
+        );
+      },
+      { once: true },
+    );
   });
-
 }
 
 const buttons = document.querySelectorAll('button');
@@ -22,6 +25,14 @@ const buttonArray = Array.from(buttons);
 const inputArray = Array.from(inputs);
 
 const events = ['click', 'input', 'blur'];
+
+function printMessage(message) {
+  const div = document.createElement('div');
+
+  div.textContent = message;
+  div.className = 'message';
+  document.body.append(div);
+}
 
 buttonArray.forEach((el) => {
   events.forEach((eventName) => {
@@ -38,14 +49,6 @@ inputArray.forEach((el) => {
     });
   });
 });
-
-const printMessage = (message) => {
-  const div = document.createElement('div');
-
-  div.textContent = message;
-  div.className = 'message';
-  document.body.append(div);
-};
 
 const loginField = document.getElementById('login');
 const passwordField = document.getElementById('password');
